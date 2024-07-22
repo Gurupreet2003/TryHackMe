@@ -1,0 +1,25 @@
+In short, offensive security is the process of breaking into computer systems, exploiting software bugs, and finding loopholes in applications to gain unauthorized access to them.
+
+On the flip side, there is also defensive security, which is the process of protecting an organization's network and computer systems by analyzing and securing any potential digital threats; learn more in the digital forensics room.In a defensive cyber role, you could be investigating infected computers or devices to understand how it was hacked, tracking down cybercriminals, or monitoring infrastructure for malicious activity.
+
+task 1 hack a fake bank application called FakeBank.
+
+step 1 :- We will use a command-line application called "GoBuster" to brute-force FakeBank's website to find hidden directories and pages. GoBuster will take a list of potential page or directory names and tries accessing a website with each of them; if the page exists, it tells you.
+
+Most companies will have an admin portal page, giving their staff access to basic admin controls for day-to-day operations. For a bank, an employee might need to transfer money to and from client accounts. Often these pages are not made private, allowing attackers to find hidden pages that show, or give access to, admin controls or sensitive data.
+
+command to  be run on terminal "gobuster -u http://fakebank.com -w wordlist.txt dir"
+In the command above, -u is used to state the website we're scanning, -w takes a list of words to iterate through to find hidden pages.
+
+GoBuster will have told you the pages it found in the list of page/directory names (indicated by Status: 200). 200 (if page is found)
+
+Step 3) Hack the bank
+
+You should have found a secret bank transfer page that allows you to transfer money between accounts at the bank (/bank-transfer). Type the hidden page into the FakeBank website on the machine.
+(/bank-transfer)This page allows an attacker to steal money from any bank account, which is a critical risk for the bank.
+
+If you were a penetration tester or security consultant, this is an exercise you’d perform for companies to test for vulnerabilities in their web applications; find hidden pages to investigate for vulnerabilities.
+
+Penetration Tester - Responsible for testing technology products for finding exploitable security vulnerabilities.
+Red Teamer - Plays the role of an adversary, attacking an organization and providing feedback from an enemy's perspective.
+Security Engineer - Design, monitor, and maintain security controls, networks, and systems to help prevent cyberattacks.
