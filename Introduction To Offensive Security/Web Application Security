@@ -1,0 +1,79 @@
+A web application is like a “program” that we can use without installation as long as we have a modern standard web browser, such as Firefox, Safari, or Chrome
+
+Webmail such as Tutanota, Protonmail, Outlook, and Gmail
+Online office suites such as Microsoft Office 365 (Word, Excel, and PowerPoint), Google Drive (Docs, Sheets, and Slides), and Zoho Office (Writer, Sheet, and Show)
+Online shopping such as Amazon.com, AliExpress, and Etsy
+
+"The idea of a web application is that it is a program running on a remote server. A server refers to a computer system running continuously to “serve” the clients. In this case, the server will run a specific type of program that can be accessed by web browsers".
+
+Consider an online shopping application. The web application will read the data about the products and their details from a database server. A database is used to store information in an organized way.
+ A database server is responsible for many functions, including reading, searching, and writing to the database. The online shopping web application might need more than one database to access.
+
+Suppose an attacker manages to exploit (hack) the web application and steal the customers’ database. In that case, this will lead to a significant loss for the company and its customers.
+
+searching for an item on an online shopping site. In the simplest version, the search will take four steps:
+
+--> The user enters an item name or related keywords in the search field. The web browser sends the search keyword(s) to the online shopping web application.
+--> The web application queries (searches) the products database for the submitted keywords.
+--> The product database returns the search results matching the provided keywords to the web application.
+--> The web application formats the results as a friendly web page and returns them to the user.
+
+A bug bounty program allows the company to offer a reward for anyone who discovers a security vulnerability (weakness) in the company’s systems. The main condition is that the found vulnerability is within the bug bounty scope and rules.
+
+If you want to buy an item from an online shop, Then there are certain functions that you would expect to be able to do on this web application.
+1.) login on the website
+2.) search for the product
+3.) add the product to the shopping cart
+4.) specify the shipping address
+5.) provide the payment details
+
+There are a few main categories of common attacks against web applications. Consider the following steps and related attacks.
+
+--> Log in at the website: The attacker can try to discover the password by trying many words. The attacker would use a long list of passwords with an automated tool to test them against the login page.
+--> Search for the product: The attacker can attempt to breach the system by adding specific characters and codes to the search term. The attacker’s objective is for the target system to return data it should not or execute a program it should not.
+--> Provide payment details: The attacker would check if the payment details are sent in cleartext or using weak encryption. Encryption refers to making the data unreadable without knowing the secret key or password.
+
+OWASP Top Ten
+
+--> Identification and Authentication Failure
+Identification refers to the ability to identify a user uniquely. In contrast, authentication refers to the ability to prove that the user is whom they claim to be.
+Example weaknesses include:
+
+  Allowing the attacker to use brute force, i.e., try many passwords, usually using automated tools, to find valid login credentials.
+  Allowing the user to choose a weak password. A weak password is usually easy to guess.
+  Storing the users’ passwords in plain text. If the attacker manages to read the file containing the passwords, we don’t want them to be able to learn the stored passw
+
+-->Broken Access Control
+Access control ensures that each user can only access files (documents, images, etc.) related to their role or work. For example, you don’t want someone in the marketing department to access (read) the finance department’s documents. Example vulnerabilities related to access control include:
+
+  Failing to apply the principle of the least privilege and giving users more access permissions than they need. For example, an online customer should be able to view the prices of the items, but they should not be able to change them.
+  Being able to view or modify someone else’s account by using its unique identifier. For example, you don’t want one bank client to be able to view the transactions of another client.
+  Being able to browse pages that require authentication (logging in) as an unauthenticated user. For example, we cannot let anyone view the webmail before logging in.
+
+--> Injection
+An injection attack refers to a vulnerability in the web application where the user can insert malicious code as part of their input. One cause of this vulnerability is the lack of proper validation and sanitization of the user’s input.
+
+--> Cryptographic Failures
+This category refers to the failures related to cryptography. Cryptography focuses on the processes of encryption and decryption of data. Encryption scrambles cleartext into ciphertext, which should be gibberish to anyone who does not have the secret key to decrypt it. In other words, encryption ensures that no one can read the data without knowing the secret key. Decryption converts the ciphertext back into the original cleartext using the secret key. Examples of cryptographic failures include:
+
+  Sending sensitive data in clear text, for example, using HTTP instead of HTTPS. HTTP is the protocol used to access the web, while HTTPS is the secure version of HTTP. Others can read everything you send over HTTP, but not HTTPS.
+  Relying on a weak cryptographic algorithm. One old cryptographic algorithm is to shift each letter by one. For instance, “TRY HACK ME” becomes “USZ IBDL NF.” This cryptographic algorithm is trivial to break.
+  Using default or weak keys for cryptographic functions. It won’t be challenging to break the encryption that used 1234 as the secret key.
+
+TASK -->
+
+This task will investigate a vulnerable website that uses ""Insecure Direct Object References (IDOR)"". IDOR falls under the category of Broken Access Control. Broken access control means that an attacker can access information or perform actions not intended for them. Consider the case where a web server receives user-supplied input to retrieve objects (files, data, documents) and that they are numbered sequentially
+
+
+In general, an IDOR vulnerability can occur if too much trust has been placed on that input data. In other words, the web application does not validate whether the user has permission to access the requested object.
+
+You will see a page showing an Inventory Management System. If you click on the “Planned Shipments” tab, you will discover that an attacker has managed to mix things up as part of sabotage plans. Notice how they send the wrong tires to each assembly line; for instance, they assign scooter tires and motorcycle tires to bike assembly! If left unfixed, all tires will go to the wrong assembly.
+
+if we get any id of something we can check for other such that we can access the unauthorise stuff and may be that can be used for exploitation from user id 11 to 9 we can see everyone activity
+Just providing the correct URL for a user or a product does not necessarily mean the user should be able to access that URL. For instance, consider the product page https://store.tryhackme.thm/products/product?id=52. We can expect this URL to provide details about product number 52. In the database, items would be assigned numbers sequentially. The attacker would try other numbers such as 51 or 53 instead of 52; this might reveal other retired or unreleased products if the web application is vulnerable.
+
+
+
+We will hack the system back and undo the attacker’s steps. On “Your Activity,” you can see the activity of one of the users. We have reason to believe that this website has an IDOR vulnerability.
+id = 9 and revert back all the changes and then we got the flag
+
