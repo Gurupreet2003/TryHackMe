@@ -1,0 +1,34 @@
+However, hardware components by themselves are useless if you want to run your favorite programs and applications. We need an Operating System to control and “drive” them.
+The Operating System (OS) is the layer sitting between the hardware and the applications and programs you are running. Example programs you would use daily might include a web browser, such as Firefox, Safari, and Chrome, and a messaging app, such as Signal, WhatsApp, and Telegram. All the programs and applications cannot run directly on the computer hardware; however, they run on top of the operating system. The operating system allows these programs to access the hardware according to specific rules.
+
+In this room, we will focus on three weaknesses targeted by malicious users:
+
+--> Authentication and Weak Passwords
+--> Weak File Permissions
+--> Malicious Programs
+
+Authentication is the act of verifying your identity.
+
+Authentication can be achieved via three main ways:
+
+--> Something you know, such as a password or a PIN code.
+--> Something you are, such as a fingerprint.
+--> Something you have, such as a phone number via which you can receive an SMS message.
+
+Weak File Permissions
+Proper security dictates the principle of least privilege. In a work environment, you want any file accessible only by those who need to access it to get work done. On a personal level, if you are planning a trip with family or friends, you might want to share all the files related to the trip plan with those going on that trip; you don’t want to share such files publicly. 
+Weak file permissions make it easy for the adversary to attack confidentiality and integrity.
+Moreover, they can attack integrity as they might modify files that they should not be able to edit.
+
+Access to Malicious Programs
+Some types of malicious programs, such as Trojan horses, give the attacker access to your system. 
+Ransomware is a malicious program that encrypts the user's files. Encryption makes the file(s) unreadable without knowing the encryption password; in other words, the files become gibberish without decryption (reversing the encryption). The attacker offers the user the ability to restore availability, i.e., regain access to their original files: they would give them the encryption password if the user is willing to pay the “ransom.
+
+
+In one typical attack, the attacker seeks to gain access to a remote system. We can accomplish this attack by tricking the target into running a malicious file or by obtaining a username and a password. 
+
+TASK-->
+
+We were hired to check the security of a certain company. When we visited our client’s office, we noticed a sticky note with two words: sammie and dragon on one of the screens. Let’s see if dragon is Sammie’s password on the target machine 10.10.111.174. From the AttackBox’s terminal, we will try to log in to Sammie’s account by executing ssh sammie@10.10.111.174. The remote system will ask you to provide sammie’s password, dragon.
+
+sudo password in history of johnny and johnny password is from list provided hence cat root flag.txt
