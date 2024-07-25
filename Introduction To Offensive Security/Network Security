@@ -1,0 +1,47 @@
+A computer network is a group of computers and devices connected with each other. Network security focuses on protecting the security of these devices and the links connecting them. (In more precise terms, network security refers to the devices, technologies, and processes to protect the confidentiality, integrity, and availability of a computer network and the data on it.)
+
+Network security consists of different hardware and software solutions to achieve the set security goals. Hardware solutions refer to the devices you set up in your network to protect your network security.
+
+Examples of hardware appliances include:
+
+--> Firewall appliance: The firewall allows and blocks connections based on a predefined set of rules. It restricts what can enter and what can leave a network.
+--> Intrusion Detection System (IDS) appliance: An IDS detects system and network intrusions and intrusion attempts. It tries to detect attackers’ attempts to break into your network.
+--> Intrusion Prevention System (IPS) appliance: An IPS blocks detected intrusions and intrusion attempts. It aims to prevent attackers from breaking into your network.
+--> Virtual Private Network (VPN) concentrator appliance: A VPN ensures that the network traffic cannot be read nor altered by a third party. It protects the confidentiality (secrecy) and integrity of the sent data.
+
+On the other hand, we have software security solutions. Common examples are:
+
+--> Antivirus software: You install an antivirus on your computer or smartphone to detect malicious files and block them from executing.
+--> Host firewall: Unlike the firewall appliance, a hardware device, a host firewall is a program that ships as part of your system, or it is a program that you install on your system. For instance, MS Windows includes Windows Defender Firewall, and Apple macOS includes an application firewall; both are host firewalls.
+
+
+Every “operation” requires some form of planning to achieve success.
+
+Breaking into a target network usually includes a number of steps. According to Lockheed Martin, the Cyber Kill Chain has seven steps:
+
+--> Recon: Recon, short for reconnaissance, refers to the step where the attacker tries to learn as much as possible about the target. Information such as the types of servers, operating system, IP addresses, names of users, and email addresses, can help the attack’s success.
+--> Weaponization: This step refers to preparing a file with a malicious component, for example, to provide the attacker with remote access.
+--> Delivery: Delivery means delivering the “weaponized” file to the target via any feasible method, such as email or USB flash memory.
+--> Exploitation: When the user opens the malicious file, their system executes the malicious component.
+--> Installation: The previous step should install the malware on the target system.
+--> Command & Control (C2): The successful installation of the malware provides the attacker with a command and control ability over the target system.
+--> Actions on Objectives: After gaining control over one target system, the attacker has achieved their objectives. One example objective is Data Exfiltration (stealing target’s data).
+
+
+The first step of our attack is Recon; we can speed up our reconnaissance activities using different tools that gather information about the various aspects related to the target. For simplicity, we will use a single tool in this task, Nmap, short for Network Mapper. Nmap is a network scanner that helps us discover running machines and any programs running on them that are visible to the outside world. The IP address of the target is MACHINE_IP. We can scan it by running nmap MACHINE_IP at the terminal prompt.
+
+et’s try to gather more information about the FTP server.
+
+--> We will connect to the target FTP server by typing on the AttackBox’s terminal ftp 10.10.17.131.
+--> Next, we will try to log in using the login anonymous to see if this FTP server supports anonymous logins. To our luck, it worked.
+--> We try to see the files available using the command ls, short for list. We get a list of the filenames along with their details.
+--> If you are curious about any file, you can download it using get filename. I wonder what the file secret.txt contains, so let’s download it using get secret.txt.
+--> Once you download the files, type exit or bye to quit the FTP client
+
+Let’s summarize what we have done in this task to get root access on the target system of IP address 10.10.17.131:
+
+--> We used nmap to learn about the running services.
+--> We connected to the FTP server to learn more about its configuration.
+--> We discovered a file containing the root password mistakenly copied to a public folder. (secret.txt)
+--> We used the password we found, allowing us to log in successfully.(password of root is in secret.txt)
+--> We gained access to all the users’ files.(ssh root@ip then cat the flag of root and librarian)
