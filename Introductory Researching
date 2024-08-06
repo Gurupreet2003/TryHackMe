@@ -1,0 +1,30 @@
+because how are you supposed to break into something if you don't know how it works? The thing is: no one knows everything. Everyone (professional or amateur, experienced or totally new to the subject) will encounter problems which they don't automatically know how to solve. This is where research comes in, as, in the real world, you can't ever expect to simply be handed the answers to your questions.
+
+Let's say you've downloaded a JPEG image from a remote server. You suspect that there's something hidden inside it, but how can you get it out?
+How about we start by searching for “hiding things inside images” in Google:
+Notice that the second link down gives us the title of a technique: “Steganography”. You can then click that link and read the document, which will teach you how files are hidden inside images.
+Ok, so we know how it's done, let's try searching for a way to extract files using steganography:
+Already virtually every link is pointing to something useful. The first link contains a collection of useful tools, the second is more instructions on how to perform steganography in the first place. Realistically any of these links could prove useful,
+
+so apt is a package manager that lets us install tools on Linux distributions like Ubuntu (or Kali!).
+How can we install packages using apt? Let's search it!
+
+Often in hacking you'll come across software that might be open to exploitation. For example, Content Management Systems (such as Wordpress, FuelCMS, Ghost, etc) are frequently used to make setting up a website easier, and many of these are vulnerable to various attacks. So where would we look if we wanted to exploit specific software?
+
+The answer to that question lies in websites such as:
+--> ExploitDB  https://www.exploit-db.com/
+--> NVD  https://nvd.nist.gov/vuln/search
+--> CVE Mitre https://cve.mitre.org/
+
+NVD keeps track of CVEs (Common Vulnerabilities and Exposures) -- whether or not there is an exploit publicly available -- so it's a really good place to look if you're researching vulnerabilities in a specific piece of software. CVEs take the form: CVE-YEAR-IDNUMBER
+(Hint Hint: It's going to be really useful in the questions!)
+
+ Kali comes pre-installed with a tool called "searchsploit" which allows you to search ExploitDB from your own machine.
+
+google dorking
+site: , "" , query , operators(+,& |)
+A few common terms we can search and combine include:
+      Term	                                                                                                Action
+--> filetype:                                                                            Search for a file by its extension (e.g. PDF)
+--> cache:	                                                                             View Google's Cached version of a specified URL
+--> intitle:	                                                                           The specified phrase MUST appear in the title of the page
