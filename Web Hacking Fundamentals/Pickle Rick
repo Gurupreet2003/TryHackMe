@@ -1,0 +1,9 @@
+in this room we have to do gobuster 
+then we found out about portal.php file
+where we will login as --> username(found in source code of index.html) and password in (robots.txt)
+
+here we have a bar in which we can execute the commands i tried ls , cat ,head ,cd out of which only ls , sudo , less commands work 
+--> first ingrident is in /var/www/html/supersecreatthing.txt use less to read it
+--> second ingrident is in /home/rick/second\ ingredients less you will get the ingrident
+--> third is in root directory here we need sudo /root/3rd.txt --> we will get the ingrident using less
+
