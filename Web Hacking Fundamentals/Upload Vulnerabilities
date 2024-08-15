@@ -1,0 +1,38 @@
+  -->  Getting Started
+The instructions in this task will help you to configure the hosts file of your device. The hosts file is used for local domain name mapping, bypassing DNS. In short, it allows you to map IP addresses to domain names locally without relying on a DNS server to resolve the IP address for you. This is useful in environments such as TryHackMe where DNS is not available as it allows us to manually map one or more domains / subdomains to an IP address of our choosing. Being able to access content using a domain makes it possible to (amongst many other advantages) use name-based virtual hosting -- commonly shortened to "vhosting" -- to serve multiple websites from a single webserver: a feature which is used extensively in this room.
+
+It is very important that you understand these concepts before continuing. If any of the above information does not make sense, please do some background reading (e.g., here) into how domain names, IP addresses, and webserver VHosts work before continuing with the content of this room. -->  (https://tryhackme.com/room/introtonetworking)
+
+Using your favourite text editor in an administrative session, open the hosts file on your device.
+
+*  On Linux and MacOS the hosts file can be found at /etc/hosts.
+*  On Windows the hosts file can be found at C:\Windows\System32\drivers\etc\hosts.
+*  On Linux or MacOS you will need to use sudo to open the file for writing. In Windows you will need to open the file with "Run as Administrator".
+
+Add the following line in at the end of the file:
+10.10.161.234    overwrite.uploadvulns.thm shell.uploadvulns.thm java.uploadvulns.thm annex.uploadvulns.thm magic.uploadvulns.thm jewel.uploadvulns.thm demo.uploadvulns.thm
+(here lies your machine IP)
+
+When you terminate your instance of the upload vulns target machine, make sure to remove this line!
+
+It goes without saying that you will not get the same IP address if you redeploy the target machine later. This means that any existing entries in your hosts file when you redeploy will point at the wrong address (ergo, connectivity error). If you add a duplicate line without removing the original, as mentioned above, you will also get a connectivity error. Removing it as soon as you terminate the machine gives you a clean slate and removes these possibilities for error.
+
+Note: If you find that you cannot access the websites, this is nearly always due to one of:
+A) Having duplicate entries in your host file
+B) Having an anonymising VPN active alongside your TryHackMe VPN connection pack
+
+  --> Introduction
+The ability to upload files to a server has become an integral part of how we interact with web applications. Be it a profile picture for a social media website, a report being uploaded to cloud storage, or saving a project on Github; the applications for file upload features are limitless.
+
+Unfortunately, when handled badly, file uploads can also open up severe vulnerabilities in the server. This can lead to anything from relatively minor, nuisance problems; all the way up to full Remote Code Execution (RCE) if an attacker manages to upload and execute a shell. With unrestricted upload access to a server (and the ability to retrieve data at will), an attacker could deface or otherwise alter existing content -- up to and including injecting malicious webpages, which lead to further vulnerabilities such as XSS or CSRF. By uploading arbitrary files, an attacker could potentially also use the server to host and/or serve illegal content, or to leak sensitive information. Realistically speaking, an attacker with the ability to upload a file of their choice to your server -- with no restrictions -- is very dangerous indeed.
+
+The purpose of this room is to explore some of the vulnerabilities resulting from improper (or inadequate) handling of file uploads. Specifically, we will be looking at:
+
+*  Overwriting existing files on a server
+*  Uploading and Executing Shells on a server
+*  Bypassing Client-Side filtering
+*  Bypassing various kinds of Server-Side filtering
+*  Fooling content type validation checks
+
+do this """"""""""""""""""""""""""""""""  https://tryhackme.com/r/room/webenumerationv2  """""""""""""""""""""""""""""
+
