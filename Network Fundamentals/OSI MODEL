@@ -6,6 +6,7 @@ The OSI model (or Open Systems Interconnection Model) is an absolute fundamental
 
 --> the session layer (layer 5) will begin to create a connection to the other computer that the data is destined for.When a connection is established, a session is created. Whilst this connection is active, so is the session.The session layer (layer 5) synchronises the two computers to ensure that they are on the same page before data is sent and received.  the session layer will begin to divide up the data sent into smaller chunks of data and begin to send these chunks (packets) one at a time. This dividing up is beneficial because if the connection is lost, only the chunks that weren't yet sent will have to be sent again — not the entire piece of the data
      sessions are unique — meaning that data cannot travel over different sessions, but in fact, only across each session instead.
+The session layer is also responsible for closing the connection if it hasn't been used in a while or if it is lost. Additionally, a session can contain "checkpoints," where if the data is lost, only the newest pieces of data are required to be sent, saving bandwidth. What is worthy of noting is that sessions are unique — meaning that data cannot travel over different sessions, but in fact, only across each session instead.
 
 --> Layer 4 of the OSI model plays a vital part in transmitting data across a network
 The Transmission Control Protocol (TCP). Potentially hinted by the name, this protocol is designed with reliability and guarantee in mind. This protocol reserves a constant connection between the two devices for the amount of time it takes for the data to be sent and received.Not only this, but TCP incorporates error checking into its design. Error checking is how TCP can guarantee that data sent from the small chunks in the session layer (layer 5) has then been received and reassembled in the same order.
@@ -26,3 +27,4 @@ Devices such as routers capable of delivering packets using IP addresses are kno
 MAC addresses are set by the manufacturer and literally burnt into the card; they can’t be changed – although they can be spoofed.When information is sent across a network, it’s actually the physical address that is used to identify where exactly to send the information.
 
  this layer references the physical components of the hardware used in networking and is the lowest layer that you will find. Devices use electrical signals to transfer data between each other in a binary numbering system (1's and 0's).
+
