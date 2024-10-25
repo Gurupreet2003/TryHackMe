@@ -1,0 +1,140 @@
+-->  Introduction
+
+This room is the first room in a series of four rooms dedicated to introducing the user to vital networking concepts and the most common networking protocols:
+
+Networking Concepts (this room)
+Networking Essentials
+Networking Core Protocols
+Networking Secure Protocols
+
+Room Prerequisites
+This room expects that you know terms such as IP address and TCP port number; however, we don’t expect that the reader is able to explain such terms in proper technical depth. If you are unfamiliar with these terms, please consider joining the Pre Security path.
+
+Learning Objectives
+By the time you finish this room, you will have learned about the following:
+
+ISO OSI network model
+IP addresses, subnets, and routing
+TCP, UDP, and port numbers
+How to connect to an open TCP port from the command line
+
+
+-->  OSI Model
+
+Layer 1: Physical Layer
+In addition to Ethernet cable, shown in the illustration below, and optical fibre cable, examples of the physical layer medium include the WiFi radio bands, the 2.4 GHz band, the 5 GHz band, and the 6 GHz band.
+
+Layer 2: Data Link Layer
+The data link layer, i.e., layer 2, represents the protocol that enables data transfer between nodes on the same network segment.
+The data link layer describes an agreement between the different systems on the same network segment on how to communicate. 
+
+Layer 3: Network Layer
+The network layer, i.e., layer 3, is concerned with sending data between different networks.
+Examples of the network layer include Internet Protocol (IP), Internet Control Message Protocol (ICMP), and Virtual Private Network (VPN) protocols such as IPSec and SSL/TLS VPN.
+
+Layer 4: Transport Layer
+
+Layer 5: Session Layer
+Examples of the session layer are Network File System (NFS) and Remote Procedure Call (RPC).
+
+Layer 6: Presentation Layer
+The presentation layer ensures the data is delivered in a form the application layer can understand. Layer 6 handles data encoding, compression, and encryption. An example of encoding is character encoding, such as ASCII or Unicode.
+
+Layer 7: Application Layer
+The application layer provides network services directly to end-user applications. 
+Examples of Layer 7 protocols are HTTP, FTP, DNS, POP3, SMTP, and IMAP
+
+Summary
+
+Layer Number	               Layer Name	                              Main Function	                                          Example Protocols and Standards
+Layer 7	                  Application layer	          Providing services and interfaces to applications	                    HTTP, FTP, DNS, POP3, SMTP, IMAP
+Layer 6	                  Presentation layer	        Data encoding, encryption, and compression	                          Unicode, MIME, JPEG, PNG, MPEG
+Layer 5	                  Session layer	              Establishing, maintaining, and synchronising sessions	                          NFS, RPC
+Layer 4	                  Transport layer	            End-to-end communication and data segmentation	                                UDP, TCP
+Layer 3	                  Network layer	              Logical addressing and routing between networks	                            IP, ICMP, IPSec
+Layer 2	                  Data link layer	            Reliable data transfer between adjacent nodes	                        Ethernet (802.3), WiFi (802.11)
+Layer 1	                  Physical layer	            Physical data transmission media	                                Electrical, optical, and wireless signals
+
+
+--> TCP/IP Model
+
+Application Layer: The OSI model application, presentation and session layers, i.e., layers 5, 6, and 7, are grouped into the application layer in the TCP/IP model.
+Transport Layer: This is layer 4.
+Internet/Network Layer: This is layer 3. The OSI model’s network layer is called the Internet layer in the TCP/IP model.
+Link Layer: This is layer 2.
+
+Many modern networking textbooks show the TCP/IP model as five layers instead of four.
+  Application
+  Transport
+  Network
+  Link
+  Physical
+
+-->  IP Addresses and Subnets
+If you are wondering, a subnet mask of 255.255.255.0 can also be written as /24. The /24 means that the leftmost 24 bits within the IP address do not change across the network, i.e., the subnet.
+In other words, the leftmost three octets are the same across the whole subnet; therefore, we can expect to find addresses that range from 192.168.66.1 to 192.168.66.254. Similar to what was mentioned earlier, 192.168.66.0 and 192.168.66.255 are the network and broadcast addresses, respectively.
+
+-->  Private Addresses
+
+RFC 1918 defines the following three ranges of private IP addresses:
+
+10.0.0.0 - 10.255.255.255 (10/8)
+172.16.0.0 - 172.31.255.255 (172.16/12)
+192.168.0.0 - 192.168.255.255 (192.168/16)
+
+For a private IP address to access the Internet, the router must have a public IP address and must support Network Address Translation (NAT).
+
+Routing
+A router is like your local post office; you hand them the mail parcel, and they would know how to deliver it.
+
+
+-->  UDP and TCP
+
+An IP address identifies the host; we need a mechanism to determine the sending and receiving process. This can be achieved by using port numbers. A port number uses two octets; consequently, it ranges between 1 and 65535; port 0 is reserved. (The number 65535 is calculated by the expression 216 − 1.)
+
+In TCP, each data octet has a sequence number; this makes it easy for the receiver to identify lost or duplicated packets. The receiver, on the other hand, acknowledges the reception of data with an acknowledgement number specifying the last received octet.
+
+-->  Encapsulation
+
+In this context, encapsulation refers to the process of every layer adding a header (and sometimes a trailer) to the received unit of data and sending the “encapsulated” unit to the layer below.
+
+*  Application data: It all starts when the user inputs the data they want to send into the application. For example, you write an email or an instant message and hit the send button. The application formats this data and starts sending it according to the application protocol used, using the layer below it, the transport layer.
+*  Transport protocol segment or datagram: The transport layer, such as TCP or UDP, adds the proper header information and creates the TCP segment (or UDP datagram). This segment is sent to the layer below it, the network layer.
+*  Network packet: The network layer, i.e. the Internet layer, adds an IP header to the received TCP segment or UDP datagram. Then, this IP packet is sent to the layer below it, the data link layer.
+*  Data link frame: The Ethernet or WiFi receives the IP packet and adds the proper header and trailer, creating a frame.
+
+We start with application data.
+At the transport layer, we add a TCP or UDP header to create a TCP segment or UDP datagram.
+at the network layer, we add the proper IP header to get an IP packet
+Finally, we add the appropriate header and trailer to get a WiFi or Ethernet frame at the link layer.
+
+The Life of a Packet
+
+Based on what we have studied so far, we can explain a simplified version of the packet’s life. Let’s consider the scenario where you search for a room on TryHackMe.
+
+*  On the TryHackMe search page, you enter your search query and hit enter.
+*  Your web browser, using HTTPS, prepares an HTTP request and pushes it to the layer below it, the transport layer.
+*  The TCP layer needs to establish a connection via a three-way handshake between your browser and the TryHackMe web server. After establishing the TCP connection, it can send the HTTP request containing the search query. Each TCP segment created is sent to the layer below it, the Internet layer.
+*  The IP layer adds the source IP address, i.e., your computer, and the destination IP address, i.e., the IP address of the TryHackMe web server. For this packet to reach the router, your laptop delivers it to the layer below it, the link layer.
+*  Depending on the protocol, The link layer adds the proper link layer header and trailer, and the packet is sent to the router.
+*  The router removes the link layer header and trailer, inspects the IP destination, among other fields, and routes the packet to the proper link. Each router repeats this process until it reaches the router of the target server.
+
+
+
+-->  Telnet
+
+The TELNET (Teletype Network) protocol is a network protocol for remote terminal connection. In simpler words, telnet, a TELNET client, allows you to connect to and communicate with a remote system and issue text commands. Although initially it was used for remote administration, we can use telnet to connect to any server listening on a TCP port number.
+
+On the target virtual machine, different services are running. We will experiment with three of them:
+
+*  Echo server: This server echoes everything you send it. By default, it listens on port 7.
+*  Daytime server: This server listens on port 13 by default and replies with the current day and time.
+*  Web (HTTP) server: This server listens on TCP port 80 by default and serves web pages.
+
+**********************************  Before continuing, we should mention that the echo and daytime servers are considered security risks and should not be run; however, we started them explicitly to demonstrate communication with the server using telnet. In the terminal below, we connect to the target VM at the echo server’s TCP port number 7. To close the connection, press the CTRL + ] keys simultaneously.*******************************************
+
+
+***********  Finally, let’s request a web page using telnet. After connecting to port 80, you need to issue the command GET / HTTP/1.1 and identify the host where anything goes, such as Host: telnet.thm.  ***********
+
+
+Note: You may have to press Enter after sending the information in case you don’t get a response.
