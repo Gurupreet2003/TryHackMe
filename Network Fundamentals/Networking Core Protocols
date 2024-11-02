@@ -128,4 +128,6 @@ FTP	            TCP	                    21
 SMTP	          TCP	                    25
 POP3	          TCP	                    110
 IMAP	          TCP	                    143
-
+SMTPS	          TCP                 465 and 587
+POP3S	          TCP                     995
+IMAPS	          TCP                     993
