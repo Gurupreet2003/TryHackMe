@@ -1,0 +1,46 @@
+-->  Understanding the Impact of Cyber Security Training  
+
+The real power of training from an organisation’s perspective is that it increases the team’s capacity without hiring additional team members. The main reason is that it prepares the team to handle what will come their way. Instead of learning new concepts, techniques, and tools in the middle of a cyber attack, they have come prepared.
+
+
+-->  Cyber Security Training for Large Organisations
+
+For smaller teams, off-the-shelf training would be the most logical choice. However, if your team exceeds a certain size, typically beyond twenty employees, or if your training needs are very specific, it makes sense to customise existing training to your organisation’s needs. TryHackMe enables this via “Content Studio.” This feature allows you to modify or even create modules based on your organisation’s training needs and priorities. Such customisation increases the efficacy of your users’ training.
+
+Large corporations don’t want a standalone solution but need it integrated into their existing software landscape. They usually look for a training solution that supports SSO (Single Sign-On) and has well-documented APIs. Such functionalities ensure training with existing systems seamlessly.
+
+
+-->  Write a Cyber Security Training Investment Proposal
+
+Calculating the Financial Impact of Training
+Let’s talk numbers! To calculate the financial impact of training, we will consider the following case:
+
+Situation: A cyber security team has ten employees
+Cost: Each employee costs $80,000 annually
+Assumption: Training increases productivity by 4%
+Knowing that one employee costs $80,000 annually and that we have ten employees, then the savings (gains) due to the training of ten employees are $32,000 (10 × 4% × $80,000).
+
+Assuming that the cost of training is $500 per employee, the total cost is $5,000 (10 × $500 = $5,000).
+
+It is easy now to show that the Return On Investment (ROI) is 640% ($32,000/$5,000 = 640%).
+
+Writing a Training Proposal
+At TryHackMe, we’ve seen many proposals and learned what works and what doesn’t. Consider downloading the attached proposal, Cost savings by investing in Cyber Security training. It should increase the likelihood of obtaining the budget.
+
+
+-->  Vendor Selection
+
+Now that we have learned the importance of training, we need to consider the selection of the training vendor. There are a few essential questions to consider, which can aid in vendor selection. We list the following questions that those responsible for vendor selection should ask:
+
+Who are you buying the training for?
+What are the experience, background, role, and topics relevant to your employees?
+Has the vendor experience with similar organisations?
+What is the content’s breadth, depth, and quality for the topics you care about?
+Can users learn, train, and practice on a single platform?
+The cost of training is important for the CFO (Chief Financial Officer); however, given the cost of cyber security employees, the cost of training is typically dwarfed by the benefits of making the team more productive.
+
+
+-->  Conclusion
+
+https://business.tryhackme.com/
+https://tryhackme.com/classrooms
