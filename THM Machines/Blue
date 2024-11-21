@@ -1,0 +1,43 @@
+-->  Recon
+
+Scan and learn what exploit this machine is vulnerable to. Please note that this machine does not respond to ping (ICMP) and may take a few minutes to boot up. This room is not meant to be a boot2root CTF, rather, this is an educational series for complete beginners. Professionals will likely get very little out of this room beyond basic practice as the process here is meant to be beginner-focused. 
+
+Link to Ice, the sequel to Blue: Link
+https://tryhackme.com/room/ice
+You can check out the third box in this series, Blaster, here:
+https://tryhackme.com/room/blaster
+
+The virtual machine used in this room (Blue) can be downloaded for offline usage from https://darkstar7471.com/resources.html
+
+
+
+-->  Gain Access
+
+exploit/windows/smb/ms17_010_eternalblue
+
+
+-->  Escalate
+
+nothing use getsystem but already we are system
+
+-->  Cracking
+
+used crackstation to crack password of jon using hashdump
+
+
+-->  Find flags!
+
+Flag1? This flag can be found at the system root. 
+c:\flag1.txt
+ANS   -->  flag{access_the_machine}
+
+Flag2? This flag can be found at the location where passwords are stored within Windows.
+*Errata: Windows really doesn't like the location of this flag and can occasionally delete it. It may be necessary in some cases to terminate/restart the machine and rerun the exploit to find this flag. This relatively rare, however, it can happen. 
+c:\Windows\System32\config\flag2.txt
+ANS  -->  flag{sam_database_elevated_access}
+
+flag3? This flag can be found in an excellent location to loot. After all, Administrators usually have pretty interesting things saved. 
+c:\Users\Jon\Documents\flag3.txt
+ANS  -->flag{admin_documents_can_be_valuable}
+
+** to solve this we need to find the flag1.txt(looked on internet) --> then search flag1.txt , flag2.txt and flag3.txt using search -f in meterpreter
