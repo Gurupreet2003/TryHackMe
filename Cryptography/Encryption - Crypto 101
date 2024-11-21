@@ -1,0 +1,138 @@
+-->  What will this room cover?
+
+This room will cover:
+*  Why cryptography matters for security and CTFs
+*  The two main classes of cryptography and their uses
+*  RSA, and some of the uses of RSA
+*  2 methods of Key Exchange
+*  Notes about the future of encryption with the rise of Quantum Computing
+
+
+-->  Key terms
+
+Ciphertext - The result of encrypting a plaintext, encrypted data
+
+Cipher - A method of encrypting or decrypting data. Modern ciphers are cryptographic, but there are many non cryptographic ciphers like Caesar.
+
+Plaintext - Data before encryption, often text but not always. Could be a photograph or other file
+
+Encryption - Transforming data into ciphertext, using a cipher.
+
+Encoding - NOT a form of encryption, just a form of data representation like base64. Immediately reversible.
+
+Key - Some information that is needed to correctly decrypt the ciphertext and obtain the plaintext.
+
+Passphrase - Separate to the key, a passphrase is similar to a password and used to protect a key.
+
+Asymmetric encryption - Uses different keys to encrypt and decrypt.
+
+Symmetric encryption - Uses the same key to encrypt and decrypt
+
+Brute force - Attacking cryptography by trying every different password or every different key
+
+Cryptanalysis - Attacking cryptography by finding a weakness in the underlying maths
+
+
+-->  Why is Encryption important?
+
+Cryptography is used to protect confidentiality, ensure integrity, ensure authenticity.
+
+When logging into TryHackMe, your credentials were sent to the server. These were encrypted, otherwise someone would be able to capture them by snooping on your connection.
+
+When you connect to SSH, your client and the server establish an encrypted tunnel so that no one can snoop on your session.
+
+When you connect to your bank, there’s a certificate that uses cryptography to prove that it is actually your bank rather than a hacker.
+
+When you download a file, how do you check if it downloaded right? You can use cryptography here to verify a checksum of the data.
+
+You rarely have to interact directly with cryptography, but it silently protects almost everything you do digitally.
+
+DO NOT encrypt passwords unless you’re doing something like a password manager. Passwords should not be stored in plaintext, and you should use hashing to manage them safely.
+
+
+-->  Crucial Crypto Maths 
+
+The Modulo operator. Pretty much every programming language implements this operator, or has it available through a library. When you need to work with large numbers, use a programming language. Python is good for this as integers are unlimited in size, and you can easily get an interpreter.
+When learning division for the first time, you were probably taught to use remainders in your answer. X % Y is the remainder when X is divided by Y.
+
+Examples
+25 % 5 = 0 (5*5 = 25 so it divides exactly with no remainder)
+23 % 6 = 5 (23 does not divide evenly by 6, there would be a remainder of 5)
+
+An important thing to remember about modulo is that it’s not reversible. If I gave you an equation: x % 5 = 4, there are infinite values of x that will be valid.
+
+
+-->  RSA - Rivest Shamir Adleman
+
+The math(s) side
+RSA is based on the mathematically difficult problem of working out the factors of a large number. It’s very quick to multiply two prime numbers together, say 17*23 = 391, but it’s quite difficult to work out what two prime numbers multiply together to make 14351 (113x127 for reference).
+
+CTFs involving RSA
+Crypto CTF challenges often present you with a set of these values, and you need to break the encryption and decrypt a message to retrieve the flag.
+
+There’s a lot more maths to RSA, and it gets quite complicated fairly quickly. If you want to learn the maths behind it, I recommend reading MuirlandOracle’s blog post here: https://muirlandoracle.co.uk/2020/01/29/rsa-encryption/.
+
+
+-->  Establishing Keys Using Asymmetric Cryptography
+
+A very common use of asymmetric cryptography is exchanging keys for symmetric encryption.
+Asymmetric encryption tends to be slower, so for things like HTTPS symmetric encryption is better.
+But the question is, how do you agree a key with the server without transmitting the key for people snooping to see?
+
+Metaphor time
+
+Imagine you have a secret code, and instructions for how to use the secret code. If you want to send your friend the instructions without anyone else being able to read it, what you could do is ask your friend for a lock.
+Only they have the key for this lock, and we’ll assume you have an indestructible box that you can lock with it.
+If you send the instructions in a locked box to your friend, they can unlock it once it reaches them and read the instructions.
+After that, you can communicate in the secret code without risk of people snooping.
+
+In this metaphor, the secret code represents a symmetric encryption key, the lock represents the server’s public key, and the key represents the server’s private key.
+
+***********************************  The Real World  *************************************
+In reality, you need a little more cryptography to verify the person you’re talking to is who they say they are, which is done using digital signatures and certificates. You can find a lot more detail on how HTTPS (one example where you need to exchange keys) really works from this excellent blog post. https://robertheaton.com/2014/03/27/how-does-https-actually-work/
+
+
+-->  Digital signatures and Certificates
+
+The simplest form of digital signature would be encrypting the document with your private key, and then if someone wanted to verify this signature they would decrypt it with your public key and check if the files match.
+
+
+-->  SSH Authentication
+already studied the task in one of the rooms
+
+
+-->  Explaining Diffie Hellman Key Exchange
+
+What is Key Exchange?
+Key exchange allows 2 people/parties to establish a set of common cryptographic keys without an observer being able to get these keys. Generally, to establish common symmetric keys.
+
+*******************************************************    Extra Resources    ********************************************************************
+An excellent video if you want a visual explanation is available here.  ******************************************* https://www.youtube.com/watch?v=NmM9HA2MQGI  ******************************************
+DH Key Exchange is often used alongside RSA public key cryptography, to prove the identity of the person you’re talking to with digital signing. This prevents someone from attacking the connection with a man-in-the-middle attack by pretending to be Bob.
+
+
+
+-->  PGP, GPG and AES
+
+PGP and GPG already learned in some room 
+
+What about AES?
+AES, sometimes called Rijndael after its creators, stands for Advanced Encryption Standard. It was a replacement for DES which had short keys and other cryptographic flaws.
+AES and DES both operate on blocks of data (a block is a fixed size series of bits).
+AES is complicated to explain, and doesn’t seem to come up as often. If you’d like to learn how it works, here’s an excellent video from Computerphile 
+***********************************    https://www.youtube.com/watch?v=O4xNJsjtN6E    ********************************************************
+
+
+-->  The Future - Quantum Computers and Encryption
+
+Asymmetric and Quantum
+While it’s unlikely we’ll have sufficiently powerful quantum computers until around 2030, once these exist encryption that uses RSA or Elliptical Curve Cryptography will be very fast to break. This is because quantum computers can very efficiently solve the mathematical problems that these algorithms rely on for their strength.
+
+AES/DES and Quantum
+AES with 128 bit keys is also likely to be broken by quantum computers in the near future, but 256 bit AES can’t be broken as easily. Triple DES is also vulnerable to attacks from quantum computers.
+
+Current Recommendations
+The NSA recommends using RSA-3072 or better for asymmetric encryption and AES-256 or better for symmetric encryption. There are several competitions currently running for quantum safe cryptographic algorithms, and it’s likely that we will have a new encryption standard before quantum computers become a threat to RSA and AES.
+
+If you’d like to learn more about this, NIST has resources that detail what the issues with current encryption is and the currently proposed solutions for these. https://doi.org/10.6028/NIST.IR.8105
+I also recommend the book "Cryptography Apocalypse" By Roger A. Grimes, as this was my introduction to quantum computing and quantum safe cryptography.
